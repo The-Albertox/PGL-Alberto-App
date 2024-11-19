@@ -1,4 +1,3 @@
-// app/tabs/qr/index.tsx
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import QRCode from "react-native-qrcode-svg";
@@ -16,5 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#f5f5f5",
   },
 });

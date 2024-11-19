@@ -1,6 +1,6 @@
-// app/tabs/hobbies/index.tsx
+// screens/HobbiesScreen.tsx
 import React from "react";
-import { ScrollView, Text, StyleSheet } from "react-native";
+import { ScrollView, Text, StyleSheet, View } from "react-native";
 
 export default function HobbiesScreen() {
   const hobbies = [
@@ -14,19 +14,27 @@ export default function HobbiesScreen() {
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {hobbies.map((hobby, index) => (
-        <Text key={index} style={styles.hobbyText}>
-          {hobby}
-        </Text>
-      ))}
-    </ScrollView>
+    <View style={styles.screenContainer}>
+      <ScrollView contentContainerStyle={styles.hobbiesContainer}>
+        {hobbies.map((hobby, index) => (
+          <Text key={index} style={styles.hobbyText}>
+            {hobby}
+          </Text>
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
+  screenContainer: {
+    alignItems: "center", 
+    backgroundColor: "#f5f5f5",
+    padding: 20,
+  },
+  hobbiesContainer: {
+    flexGrow: 1, 
+    alignItems: "center", 
   },
   hobbyText: {
     fontSize: 16,
