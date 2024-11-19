@@ -6,7 +6,7 @@ import { Audio } from "expo-av";
 export default function Header() {
   const meow = async () => {
     const { sound } = await Audio.Sound.createAsync(
-      require("../../../../assets/sounds/CATMEOW.mp3")
+      require("../assets/sounds/CATMEOW.mp3")
     );
 
     await sound.playAsync();
@@ -16,7 +16,7 @@ export default function Header() {
       <Pressable onPress={meow}>
         <Image
           style={styles.avatar}
-          source={require("../../../../assets/img/authors.jpg")}
+          source={require("../assets/img/authors.jpg")}
         />
       </Pressable>
 

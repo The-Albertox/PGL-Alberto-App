@@ -3,5 +3,5 @@ import React, { Component } from "react";
 import { Link, Redirect } from "expo-router";
 
 export default function AppPage() {
-  return <Redirect href="./welcome"></Redirect>;
+  return <Redirect href="/welcome"></Redirect>;
 }

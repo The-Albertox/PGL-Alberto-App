@@ -4,7 +4,7 @@ import { Slot } from "expo-router";
 
 const AppLayout = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Slot />
     </View>
   );
