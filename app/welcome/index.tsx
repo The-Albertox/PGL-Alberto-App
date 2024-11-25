@@ -27,7 +27,7 @@ export default function WelcomePage() {
       </Pressable>
 
       <Pressable style={styles.button}>
-        <Link style={styles.buttonText} href="./todo">
+        <Link style={styles.buttonText} href="./shoppingList">
           Ir a la lista de la compra
         </Link>
       </Pressable>
