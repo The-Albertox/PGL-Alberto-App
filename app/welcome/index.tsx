@@ -25,6 +25,12 @@ export default function WelcomePage() {
           Ir al portfolio
         </Link>
       </Pressable>
+
+      <Pressable style={styles.button}>
+        <Link style={styles.buttonText} href="./todo">
+          Ir a la lista de la compra
+        </Link>
+      </Pressable>
     </View>
   );
 }
