@@ -201,8 +201,8 @@ export default function ListaDeCompras() {
                 </Text>
               </View>
               <Pressable onPress={() => marcarComoObtenido(item.id)}>
-                <Text style={item.enCarrito ? styles.pending : styles.obtein}>
-                  {item.enCarrito ? "Pendiente" : "✓"}
+                <Text style={item.enCarrito ? styles.obtein : styles.pending}>
+                  {item.enCarrito ? "✓" : "Pendiente"}
                 </Text>
               </Pressable>
               <Pressable onPress={() => editarProducto(item)}>
