@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Stack, Tabs } from "expo-router";
-import Header from "../../components/header";
+import Header from "../../../components/header";
 
 const portfolioApp = () => {
   return (

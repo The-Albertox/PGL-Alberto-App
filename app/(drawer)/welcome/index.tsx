@@ -16,7 +16,7 @@ export default function WelcomePage() {
       <View style={styles.body}>
         <Image
           style={styles.image}
-          source={require("../../assets/img/authors.jpg")}
+          source={require("../../../assets/img/authors.jpg")}
         />
       </View>
 

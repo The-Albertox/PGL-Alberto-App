@@ -46,13 +46,13 @@ export default function ListaDeCompras() {
   ];
 
   const categoriasImagen: Record<string, any> = {
-    Panadería: require("../../assets/img/panaderia.png"),
-    Bebidas: require("../../assets/img/bebidas.png"),
-    Enlatados: require("../../assets/img/enlatados.png"),
-    Carnes: require("../../assets/img/carnes.png"),
-    Pescados: require("../../assets/img/pescados.png"),
-    "Frutas/Verduras": require("../../assets/img/frutas_verduras.png"),
-    Otros: require("../../assets/img/otrosxd.png"),
+    Panadería: require("../../../assets/img/panaderia.png"),
+    Bebidas: require("../../../assets/img/bebidas.png"),
+    Enlatados: require("../../../assets/img/enlatados.png"),
+    Carnes: require("../../../assets/img/carnes.png"),
+    Pescados: require("../../../assets/img/pescados.png"),
+    "Frutas/Verduras": require("../../../assets/img/frutas_verduras.png"),
+    Otros: require("../../../assets/img/otrosxd.png"),
   };
 
   const agregarProducto = () => {
