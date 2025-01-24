@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, TextInput, Button, Alert } from 'react-native';
+import { router } from "expo-router";
+import React, { useState } from "react";
+import { Text, StyleSheet, View, TextInput, Button, Alert } from "react-native";
 
-const Register = ({ navigation }) => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Register = () => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const validateInputs = () => {
-    
     if (!fullName || !email || !password) {
-      Alert.alert('Error', 'Todos los campos son obligatorios.');
+      Alert.alert("Error", "Todos los campos son obligatorios.");
       return false;
     }
 
-    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      Alert.alert('Error', 'Por favor, ingresa un email válido.');
+      Alert.alert("Error", "Por favor, ingresa un email válido.");
       return false;
     }
 
-    
     if (password.length < 8) {
-      Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres.');
+      Alert.alert("Error", "La contraseña debe tener al menos 8 caracteres.");
       return false;
     }
 
@@ -33,29 +31,31 @@ const Register = ({ navigation }) => {
     if (!validateInputs()) return;
 
     try {
-      
-      const response = await fetch('https://api.ejemplo.com/register', {
-        method: 'POST',
+      const response = await fetch("http://192.168.1.193:8082/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName,
+          fullname: fullName,
           email,
-          password,
+          pswd: password,
         }),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        Alert.alert('Éxito', 'Registro exitoso.');
-        navigation.navigate('Login'); 
+        Alert.alert("Éxito", "Registro exitoso.");
+        router.navigate("./login");
       } else {
-        Alert.alert('Error', result.message || 'Hubo un problema con el registro.');
+        Alert.alert(
+          "Error",
+          result.message || "Hubo un problema con el registro."
+        );
       }
     } catch (error) {
-      Alert.alert('Error', 'No se pudo conectar con el servidor.');
+      Alert.alert("Error", "No se pudo conectar con el servidor.");
     }
   };
 
@@ -90,18 +90,18 @@ const Register = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     marginBottom: 20,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,

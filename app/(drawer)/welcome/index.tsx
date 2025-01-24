@@ -1,10 +1,22 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable, Alert } from "react-native";
 import React from "react";
-
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WelcomePage() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("authToken");
+      Alert.alert("Sesión cerrada", "Has cerrado sesión correctamente.");
+      router.navigate("/user-management/login");
+    } catch (error) {
+      Alert.alert("Error", "No se pudo cerrar sesión. Inténtalo de nuevo.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -30,6 +42,13 @@ export default function WelcomePage() {
         <Link style={styles.buttonText} href="./shoppingList">
           Ir a la lista de la compra
         </Link>
+      </Pressable>
+
+      <Pressable
+        style={[styles.button, styles.logoutButton]}
+        onPress={handleLogout}
+      >
+        <Text style={styles.buttonText}>Cerrar Sesión</Text>
       </Pressable>
     </View>
   );
@@ -70,7 +89,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    marginBottom: 40,
+    marginBottom: 20,
+  },
+  logoutButton: {
+    backgroundColor: "#ff4d4d",
   },
   buttonText: {
     color: "#ffffff",
