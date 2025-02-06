@@ -38,4 +38,21 @@ export const apiService = {
       return null;
     }
   },
+
+  async deleteImage(token: string, imageId: number) {
+    try {
+      const response = await fetch(
+        `http://192.168.116.174:8082/images/${imageId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!response.ok) throw new Error("Error deleting image");
+      return response.json();
+    } catch (error) {
+      console.error("API Error:", error);
+      return null;
+    }
+  },
 };

@@ -1,18 +1,36 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, FlatList, Image, Pressable, Modal, Button } from "react-native";
-import { apiService } from "../../service/apiService";
-import { asyncStorageService } from "../../service/async-storage-service";
-import LoadingSpinner from "../../components/loadingSpinner";
-import { Camera, CameraType } from "expo-camera";
+import {
+  View,
+  FlatList,
+  Image,
+  Pressable,
+  Modal,
+  Button,
+  Alert,
+} from "react-native";
+import { apiService } from "../../../service/apiService";
+import { asyncStorageService } from "../../../service/async-storage-service";
+import LoadingSpinner from "../../../components/loadingSpinner";
+import {
+  Camera,
+  CameraType,
+  useCameraPermissions,
+  CameraView,
+} from "expo-camera";
+
+interface ImageData {
+  id: number;
+  encodedData: string;
+}
 
 const GalleryScreen = () => {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [cameraVisible, setCameraVisible] = useState(false);
   const [cameraLoading, setCameraLoading] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
-  const cameraRef = useRef(null);
+  const cameraRef = useRef<CameraView>(null);
 
   useEffect(() => {
     const loadImages = async () => {
@@ -35,6 +53,9 @@ const GalleryScreen = () => {
         const photo = await cameraRef.current.takePictureAsync({
           base64: true,
         });
+        if (!photo || !photo.base64) {
+          throw new Error("No se pudo capturar la foto");
+        }
         const token = await asyncStorageService.get<string>(
           asyncStorageService.KEYS.userToken
         );
@@ -57,6 +78,32 @@ const GalleryScreen = () => {
     }
   };
 
+  const deleteImage = async (imageId: number) => {
+    const token = await asyncStorageService.get<string>(
+      asyncStorageService.KEYS.userToken
+    );
+    if (token) {
+      Alert.alert(
+        "Eliminar Imagen",
+        "¿Estás seguro de que quieres eliminar esta imagen?",
+        [
+          { text: "Cancelar", style: "cancel" },
+          {
+            text: "Eliminar",
+            onPress: async () => {
+              const result = await apiService.deleteImage(token, imageId);
+              if (result) {
+                setImages((prevImages) =>
+                  prevImages.filter((img) => img.id !== imageId)
+                );
+              }
+            },
+          },
+        ]
+      );
+    }
+  };
+
   if (!permission) {
     return (
       <Button title="Permitir acceso a la cámara" onPress={requestPermission} />
@@ -70,9 +117,12 @@ const GalleryScreen = () => {
       ) : (
         <FlatList
           data={images}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <Pressable onPress={() => setSelectedImage(item.encodedData)}>
+            <Pressable
+              onPress={() => setSelectedImage(item.encodedData)}
+              onLongPress={() => deleteImage(item.id)}
+            >
               <Image
                 source={{ uri: `data:image/png;base64,${item.encodedData}` }}
                 style={{ width: 100, height: 100 }}
@@ -86,10 +136,10 @@ const GalleryScreen = () => {
         {cameraLoading ? (
           <LoadingSpinner />
         ) : (
-          <Camera ref={cameraRef} style={{ flex: 1 }} type={CameraType.back}>
+          <CameraView ref={cameraRef} style={{ flex: 1 }} facing="back">
             <Button title="Tomar Foto" onPress={takePicture} />
             <Button title="Cerrar" onPress={() => setCameraVisible(false)} />
-          </Camera>
+          </CameraView>
         )}
       </Modal>
       <Modal visible={!!selectedImage} transparent={true}>
