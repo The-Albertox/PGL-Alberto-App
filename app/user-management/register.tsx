@@ -31,17 +31,20 @@ const Register = () => {
     if (!validateInputs()) return;
 
     try {
-      const response = await fetch("http://192.168.1.193:8082/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullname: fullName,
-          email,
-          pswd: password,
-        }),
-      });
+      const response = await fetch(
+        "http://192.168.116.174:8082/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullname: fullName,
+            email,
+            pswd: password,
+          }),
+        }
+      );
 
       const result = await response.json();
 
