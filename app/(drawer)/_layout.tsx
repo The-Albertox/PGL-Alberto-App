@@ -28,6 +28,13 @@ const DrawerLayout = () => {
             title: "Lista de Compras",
           }}
         />
+        <Drawer.Screen
+          name="screens/galleryScreen"
+          options={{
+            drawerLabel: "Camara",
+            title: "Camaras",
+          }}
+        />
       </Drawer>
     </GestureHandlerRootView>
   );
@@ -36,5 +43,3 @@ const DrawerLayout = () => {
 export default DrawerLayout;
 
 const styles = StyleSheet.create({});
-
-

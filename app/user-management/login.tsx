@@ -34,7 +34,7 @@ const Login = () => {
     if (!validateInputs()) return;
 
     try {
-      const response = await fetch("http://192.168.116.174:8082/auth/login", {
+      const response = await fetch("http://192.168.1.193:8082/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

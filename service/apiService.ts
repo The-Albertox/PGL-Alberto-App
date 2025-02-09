@@ -8,7 +8,11 @@ export const apiService = {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      if (!response.ok) throw new Error("Error fetching images");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error fetching images:", errorData);
+        throw new Error("Error fetching images");
+      }
       return response.json();
     } catch (error) {
       console.error("API Error:", error);
@@ -31,7 +35,11 @@ export const apiService = {
         },
         body: JSON.stringify({ encodedData: base64Image, width, height }),
       });
-      if (!response.ok) throw new Error("Error saving image");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error saving image:", errorData);
+        throw new Error("Error saving image");
+      }
       return response.json();
     } catch (error) {
       console.error("API Error:", error);
@@ -48,7 +56,11 @@ export const apiService = {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      if (!response.ok) throw new Error("Error deleting image");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error deleting image:", errorData);
+        throw new Error("Error deleting image");
+      }
       return response.json();
     } catch (error) {
       console.error("API Error:", error);
